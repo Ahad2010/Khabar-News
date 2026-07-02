@@ -1,0 +1,126 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  /* Broadsheet-meets-broadcast look: navy masthead, white reading surface,
+     a deep red signal for breaking/category accents, serif headlines over sans body. */
+  --color-paper: #ffffff;
+  --color-card: #ffffff;
+  --color-ink: #14161a;
+  --color-ink-muted: #5c5f66;
+  --color-line: #e2e3e6;
+  --color-brand: #1d3461;
+  --color-brand-dark: #0f2238;
+  --color-breaking: #9e1b32;
+  --color-signal: #9e1b32;
+}
+
+.dark {
+  --color-paper: #11151c;
+  --color-card: #181d26;
+  --color-ink: #eef0f3;
+  --color-ink-muted: #9aa1ad;
+  --color-line: #2a3140;
+  --color-brand: #5b86c4;
+  --color-brand-dark: #0a121e;
+  --color-breaking: #d9536b;
+  --color-signal: #d9536b;
+}
+
+@theme inline {
+  --color-paper: var(--color-paper);
+  --color-card: var(--color-card);
+  --color-ink: var(--color-ink);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-line: var(--color-line);
+  --color-brand: var(--color-brand);
+  --color-brand-dark: var(--color-brand-dark);
+  --color-breaking: var(--color-breaking);
+  --color-signal: var(--color-signal);
+
+  --font-display: var(--font-headline-google), Georgia, serif;
+  --font-headline: var(--font-headline-google), Georgia, serif;
+  --font-body: var(--font-body-google), system-ui, sans-serif;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+}
+
+/* Hero / top-tier headlines: bold sentence-case display face, the loudest voice on the page. */
+.headline-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+  line-height: 1.04;
+}
+
+/* Card / section headlines: a step quieter than the display face. */
+.headline-en {
+  font-family: var(--font-headline);
+  letter-spacing: -0.01em;
+}
+
+/* Brand signature stripe: a two-tone navy/red rule under the masthead. */
+.signature-stripe {
+  height: 4px;
+  background: linear-gradient(to right, var(--color-brand) 0 50%, var(--color-breaking) 50% 100%);
+}
+
+.ticker-track {
+  animation: ticker-scroll 30s linear infinite;
+}
+
+@keyframes ticker-scroll {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes live-pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.78);
+  }
+}
+
+.live-dot {
+  animation: live-pulse 1.4s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track,
+  .live-dot {
+    animation: none;
+  }
+}
+
+article :where(p) {
+  margin-bottom: 1.1em;
+}
+
+:root {
+  --article-font-scale: 1;
+}
+
+.prose-article {
+  font-size: calc(17px * var(--article-font-scale));
+}
+
+.card-hover {
+  transition: border-color 150ms ease;
+}
+
+.card-hover:hover .card-headline-link {
+  color: var(--color-brand);
+  text-decoration: underline;
+}
